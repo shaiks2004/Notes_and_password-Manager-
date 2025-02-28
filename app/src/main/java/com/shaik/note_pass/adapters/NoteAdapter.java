@@ -40,6 +40,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note_model, NoteAdapte
                 Intent intent = new Intent(context, notes_details.class);
                 intent.putExtra("title", note.getTittle());
                 intent.putExtra("descrption", note.getDescrption());
+//                intent.putExtra("timestamp",note.getTimeStamp());
                 intent.putExtra("docId", docId); // Correct Firestore doc ID
                 Log.d("NOTEadpater: ", "geting the document id from firestire: "+note.getTittle());
                 Log.d("NOTEadpater: ", "geting the document id from firestire: "+note.getDescrption());
@@ -67,7 +68,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note_model, NoteAdapte
             super(itemView);
             title = itemView.findViewById(R.id.title);
             descrption = itemView.findViewById(R.id.description);
-//            note_time = itemView.findViewById(R.id.note_time);
+//            note_time = itemView.findViewById(R.id.notetime);
         }
     }
 }

@@ -3,6 +3,7 @@ package com.shaik.note_pass.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.shaik.note_pass.Model.Password_Model;
 import com.shaik.note_pass.Password_display;
 import com.shaik.note_pass.R;
+import com.shaik.note_pass.Utility;
+import com.shaik.note_pass.write_password;
 
 public class passwordAdapter extends FirestoreRecyclerAdapter<Password_Model,passwordAdapter.passwordViewHolder>{
     Context context;
@@ -31,12 +34,17 @@ public class passwordAdapter extends FirestoreRecyclerAdapter<Password_Model,pas
         passwordViewHolder.Password_Name.setText(passwordModel.getName());
         passwordViewHolder.uid.setText(passwordModel.getUid());
         passwordViewHolder.password.setText(passwordModel.getPass());
-//        passwordViewHolder.timeStamp.setText(passwordModel.getTimeStamp());
+        if (passwordModel.getTimeStamp() != null) {
+            passwordViewHolder.timeStamp.setText(Utility.time(passwordModel.getTimeStamp()));
+        } else {
+            passwordViewHolder.timeStamp.setText("No Date Available");
+        }
+
         String userId=getSnapshots().getSnapshot(i).getId();
         passwordViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, Password_display.class);
+                Intent intent=new Intent(context, write_password.class);
                 intent.putExtra("Password_Name",passwordModel.getName());
                 intent.putExtra("uid",passwordModel.getUid());
                 intent.putExtra("password",passwordModel.getPass());
@@ -46,6 +54,8 @@ public class passwordAdapter extends FirestoreRecyclerAdapter<Password_Model,pas
                 Log.d("PasswordAdapter: ", "geting the document pass from firestire: "+passwordModel.getPass());
                 Log.d("PasswordAdapter: ", "geting the document uid from firestire: "+passwordModel.getUid());
                 Log.d("PasswordAdapter: ", "geting the document time from firestire: "+passwordModel.getTimeStamp());
+//                Log.d("PasswordAdapter", "Timestamp: " + passwordModel.getTimeStamp().toDate().toString());
+
                 context.startActivity(intent);
 
             }

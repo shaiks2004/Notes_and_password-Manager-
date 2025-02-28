@@ -43,12 +43,7 @@ public class Password_Model {
         this.pass = pass;
     }
 
-    public Timestamp getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Timestamp timestamp) {
-        this.timeStamp = timeStamp;
-    }
+    public Timestamp getTimeStamp() { return timeStamp; }
+    public void setTimeStamp(Timestamp timeStamp) { this.timeStamp = timeStamp; }
 }
 

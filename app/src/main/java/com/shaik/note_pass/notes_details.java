@@ -4,6 +4,7 @@ import static android.view.View.VISIBLE;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -94,6 +95,9 @@ public class notes_details extends AppCompatActivity {
 
     }
 
+
+
+
     private void delete_note() {
         DocumentReference docs = Utility.getdata().document(docId);
 
@@ -122,6 +126,7 @@ public class notes_details extends AppCompatActivity {
         }
 
 
+        noteModel.setTimestamp(Timestamp.now());
         docs.set(noteModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -142,6 +147,18 @@ public class notes_details extends AppCompatActivity {
             main_toolbar_title.setText("Edit text");
         }
 
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id==android.R.id.home){
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

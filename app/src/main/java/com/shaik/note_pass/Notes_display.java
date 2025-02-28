@@ -3,9 +3,12 @@ package com.shaik.note_pass;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.animation.Animation;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,6 +39,7 @@ public class Notes_display extends AppCompatActivity {
         add_btn = findViewById(R.id.add_button);
         recyclerView = findViewById(R.id.recycler);
         toolbar = findViewById(R.id.toolbar);
+        InitToolbar();
 
         // Set up RecyclerView
         setupRecyclerView();
@@ -94,4 +98,27 @@ public class Notes_display extends AppCompatActivity {
         super.onStop();
         if (adapter != null) adapter.stopListening();
     }
+    private void InitToolbar() {
+        toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        ((TextView) findViewById(R.id.main_toolbar_title)).setText("Note Manager");
+
+
+        }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id==android.R.id.home){
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
+

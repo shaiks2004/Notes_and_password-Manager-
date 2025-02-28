@@ -10,9 +10,11 @@ import java.text.SimpleDateFormat;
 
 public class Utility {
 
-    static CollectionReference passwordgetdata(){
-        FirebaseUser passwordUser=FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("Password").document(passwordUser.getEmail()).collection("My_Passwords");
+    static CollectionReference passwordgetdata() {
+        FirebaseUser passwordUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("Password")
+                .document(passwordUser.getEmail())
+                .collection("My_Passwords");
     }
 
     static CollectionReference getdata() {
@@ -20,7 +22,7 @@ public class Utility {
         return FirebaseFirestore.getInstance().collection("Notes").document(currentuser.getEmail()).collection("My_notes");
     }
 
-    static String time(Timestamp timestamp) {
-        return new SimpleDateFormat("MM/DD/YYYY").format(timestamp.toDate());
+    public static String time(Timestamp timestamp) {
+        return new SimpleDateFormat("dd/MM/YYYY").format(timestamp.toDate());
     }
 }

@@ -3,6 +3,7 @@ package com.shaik.note_pass;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,12 +12,14 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.shaik.note_pass.Model.Password_Model;
 
@@ -25,6 +28,7 @@ public class write_password extends AppCompatActivity {
     Button save_password;
     EditText user_name, user_uid,user_pass;
     Boolean editmode=false;
+    Toolbar ttoolbar;
     String Name,uid,password,UserId;
 
     @SuppressLint("MissingInflatedId")
@@ -38,6 +42,9 @@ public class write_password extends AppCompatActivity {
         user_name=findViewById(R.id.passwrd_title);
         user_uid=findViewById(R.id.password_name);
         user_pass=findViewById(R.id.user_pass);
+
+        ttoolbar=findViewById(R.id.ttoolbar);
+        _Initoolbar();
 
         Name=getIntent().getStringExtra("Password_Name");
         uid=getIntent().getStringExtra("uid");
@@ -86,14 +93,40 @@ public class write_password extends AppCompatActivity {
         });
     }
 
+    private void _Initoolbar() {
+        setSupportActionBar(ttoolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("Add Password");
+        if(editmode==true){
+            getSupportActionBar().setTitle("Edit Password");
+        }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id==android.R.id.home){
+            this.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void save_to_firabase_dubbai(Password_Model passwordModel) {
         //wroting the password in the firestore.
         DocumentReference docs;
         if (editmode){
             docs=Utility.passwordgetdata().document(UserId);
+            ttoolbar.setTitle("Edit Password");
         }else{
-            docs=Utility.getdata().document();
+            docs=Utility.passwordgetdata().document();
         }
+        _Initoolbar();
+        passwordModel.setTimeStamp(Timestamp.now());
         docs.set(passwordModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

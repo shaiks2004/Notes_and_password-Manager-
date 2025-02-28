@@ -1,4 +1,4 @@
 <resources>
     <string name="splash">notes\npassword\nManager</string>
-    <string name="app_name">note_pass</string>
+    <string name="app_name">Notes-Password Manager</string>
 </resources>
