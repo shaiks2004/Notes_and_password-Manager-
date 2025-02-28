@@ -29,6 +29,7 @@ public class write_password extends AppCompatActivity {
     EditText user_name, user_uid,user_pass;
     Boolean editmode=false;
     Toolbar ttoolbar;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     String Name,uid,password,UserId;
 
     @SuppressLint("MissingInflatedId")
@@ -71,6 +72,9 @@ public class write_password extends AppCompatActivity {
                 String name=user_name.getText().toString();
                 String uid=user_uid.getText().toString();
                 String pass=user_pass.getText().toString();
+//                if(uid.trim().matches(emailPattern)){
+//                    user_uid.setError("no strong!!");
+//                }
 
                 if (name.isEmpty()){
                     user_name.setError("Please specify a name");
@@ -80,6 +84,12 @@ public class write_password extends AppCompatActivity {
 
                 } else if (pass.isEmpty()) {
                     user_pass.setError("password required");
+
+                } else if (uid.trim().matches(emailPattern)) {
+                    user_uid.setError("no strong!!");
+
+                }else if (!pass.trim().matches(emailPattern)){
+                    user_pass.setError("Password is Weak");
 
                 }
                 Password_Model passwordModel=new Password_Model();
